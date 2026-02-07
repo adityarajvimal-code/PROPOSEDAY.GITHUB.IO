@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Love 💖</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-love: #ff4d6d;
+            --soft-pink: #ffccd5;
+            --pastel-red: #c9184a;
+            --bg-gradient: linear-gradient(135deg, #fff0f3 0%, #ffccd5 100%);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background: var(--bg-gradient);
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        /* --- Animations --- */
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+        }
+
+        .heart, .petal {
+            position: absolute;
+            bottom: -10%;
+            pointer-events: none;
+            z-index: 0;
+            animation: float linear infinite;
+        }
+
+        /* --- Layout Containers --- */
+        .container {
+            position: relative;
+            z-index: 10;
+            background: rgba(255, 255, 255, 0.85);
+            padding: 2rem;
+            border-radius: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(5px);
+            width: 90%;
+            max-width: 450px;
+            border: 2px solid white;
+            transition: all 0.5s ease;
+        }
+
+        .screen {
+            display: none; /* Screens hidden by default */
+            flex-direction: column;
+            gap: 20px;
+            animation: fadeIn 0.8s ease forwards;
+        }
+
+        .screen.active { display: flex; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- Typography & Elements --- */
+        h1, h2 {
+            font-family: 'Dancing Script', cursive;
+            color: var(--pastel-red);
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+
+        p { color: #555; line-height: 1.5; }
+
+        input {
+            padding: 12px;
+            border-radius: 15px;
+            border: 2px solid var(--soft-pink);
+            outline: none;
+            text-align: center;
+            font-size: 1rem;
+            transition: border 0.3s;
+        }
+
+        input:focus { border-color: var(--primary-love); }
+
+        .btn-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        button {
+            padding: 15px 25px;
+            border: none;
+            border-radius: 50px;
+            background: var(--primary-love);
+            color: white;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 77, 109, 0.3);
+        }
+
+        button:hover {
+            transform: translateY(-3px) scale(1.05);
+            background: var(--pastel-red);
+            box-shadow: 0 0 15px rgba(255, 77, 109, 0.6);
+        }
+
+        .error-msg {
+            color: var(--pastel-red);
+            font-size: 0.9rem;
+            height: 1rem;
+        }
+
+        .success-text {
+            font-size: 2.5rem;
+            color: var(--pastel-red);
+            animation: heartbeat 1.5s infinite;
+        }
+
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="decorations"></div>
+
+    <div class="container">
+        
+        <div id="screen-password" class="screen active">
+            <h1>Enter the password 💖</h1>
+            <input type="password" id="passInput" placeholder="Special Date (DDMMYYYY)">
+            <p id="passError" class="error-msg"></p>
+            <button onclick="checkPassword()">Unlock My Heart</button>
+        </div>
+
+        <div id="screen-q1" class="screen">
+            <h2>Do you know he loves you?</h2>
+            <div class="btn-group">
+                <button onclick="nextScreen('screen-proposal')">a. Yes</button>
+                <button onclick="nextScreen('screen-proposal')">b. Ans is a</button>
+                <button onclick="nextScreen('screen-proposal')">c. Both a and b</button>
+            </div>
+        </div>
+
+        <div id="screen-proposal" class="screen">
+            <p>"I love you so much since I first met you in school, my love."</p>
+            <h2>I know that you are mine already, but will you be my babe forever?</h2>
+            <div class="btn-group">
+                <button onclick="nextScreen('screen-yes')">a. Yes</button>
+                <button onclick="nextScreen('screen-yes')">b. Ans is a</button>
+                <button onclick="nextScreen('screen-yes')">c. Both a and b</button>
+                <button onclick="nextScreen('screen-no-loop')">d. NO</button>
+            </div>
+        </div>
+
+        <div id="screen-no-loop" class="screen">
+            <h2>Sure? 😈</h2>
+            <div class="btn-group">
+                <button onclick="nextScreen('screen-proposal')">a. No</button>
+                <button onclick="nextScreen('screen-proposal')">b. Option a</button>
+                <button onclick="nextScreen('screen-proposal')">c. Both a and b</button>
+            </div>
+        </div>
+
+        <div id="screen-yes" class="screen">
+            <h1 class="success-text">You are officially mine ❤️ now</h1>
+            <p>Forever and always.</p>
+        </div>
+
+    </div>
+
+    <script>
+        // --- 1. Background Animations ---
+        function createDecorations() {
+            const container = document.getElementById('decorations');
+            const icons = ['❤️', '🌸', '💖', '🌹', '✨'];
+            
+            setInterval(() => {
+                const element = document.createElement('div');
+                element.className = Math.random() > 0.5 ? 'heart' : 'petal';
+                element.innerHTML = icons[Math.floor(Math.random() * icons.length)];
+                element.style.left = Math.random() * 100 + 'vw';
+                element.style.fontSize = (Math.random() * 20 + 10) + 'px';
+                element.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                
+                container.appendChild(element);
+                
+                setTimeout(() => {
+                    element.remove();
+                }, 5000);
+            }, 300);
+        }
+
+        // --- 2. Navigation Logic ---
+        function nextScreen(screenId) {
+            // Hide all screens
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            // Show target screen
+            document.getElementById(screenId).classList.add('active');
+
+            // If it's the final screen, trigger a "heart burst"
+            if(screenId === 'screen-yes') {
+                triggerBurst();
+            }
+        }
+
+        // --- 3. Password Check ---
+        function checkPassword() {
+            const pass = document.getElementById('passInput').value;
+            const error = document.getElementById('passError');
+            
+            if (pass === "25072005") {
+                nextScreen('screen-q1');
+            } else {
+                error.innerText = "Oops… that’s not it 👀 Try again";
+                document.getElementById('passInput').value = "";
+            }
+        }
+
+        // --- 4. Special Effects ---
+        function triggerBurst() {
+            for(let i=0; i<30; i++) {
+                setTimeout(() => {
+                    const burst = document.createElement('div');
+                    burst.className = 'heart';
+                    burst.innerHTML = '❤️';
+                    burst.style.left = '50vw';
+                    burst.style.bottom = '50vh';
+                    burst.style.transform = `translate(${(Math.random()-0.5)*100}vw, ${(Math.random()-0.5)*100}vh)`;
+                    burst.style.animation = 'fadeIn 1s forwards';
+                    document.body.appendChild(burst);
+                }, i * 50);
+            }
+        }
+
+        // Initialize
+        createDecorations();
+    </script>
+</body>
+</html>
